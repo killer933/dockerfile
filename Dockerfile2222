@@ -1,0 +1,25 @@
+FROM alpine
+MAINTAINER sunzhi1019 "sunzhi1019@163.com"
+ADD GeoIP  /root
+RUN     sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && \
+
+	addgroup -g 499 -S nginx && \
+	adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx  && \
+	mkdir ~/tmpfile && \
+	cd ~/tmpfile && \
+
+	apk --update --no-cache add git curl pcre libxslt gd openssl-dev pcre-dev zlib-dev build-base \ 
+	linux-headers libxslt-dev gd-dev openssl-dev libstdc++ libgcc patch logrotate supervisor inotify-tools \
+	autoconf automake libtool yajl yajl-dev && \
+	rm -rf /var/cache/apk/* && \
+
+	curl -sO http://nginx.org/download/nginx-1.14.0.tar.gz  && \ 
+	tar xf nginx-1.14.0.tar.gz && \
+	mv nginx-1.14.0 nginx-1.14.0-modula && \
+	tar xf nginx-1.14.0.tar.gz && \
+        rm -rf nginx-1.14.0.tar.gz && \ 
+	
+	pwd  && \
+	mv ~/GeoIP-1.4.8/ ./  && \
+	cd GeoIP-1.4.8/ && \
+	./configure && make && make install && cd .. 

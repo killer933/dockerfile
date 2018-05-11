@@ -1,0 +1,4 @@
+FROM alpine
+MAINTAINER sunzhi1019 "sunzhi1019@163.com"
+ADD GeoIP  /root
+
